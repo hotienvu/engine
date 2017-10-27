@@ -2,8 +2,8 @@ package org.buttercoin.common.util
 
 import java.util.Date
 
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 trait Validator[T] {
   def missingMessage: String

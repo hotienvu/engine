@@ -1,6 +1,7 @@
 package org.buttercoin.common.util
 
 import java.util.Date
+
 import scala.reflect.ClassTag
 
 trait Stateful {

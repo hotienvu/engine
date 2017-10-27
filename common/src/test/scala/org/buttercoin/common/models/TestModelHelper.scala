@@ -14,7 +14,7 @@ import org.buttercoin.common.query._
 import org.buttercoin.common.testhelper.Gen._
 
 object ModelGen {
-  // Order history and order event models
+  // Order history and order event org.buttercoin.common.models
   implicit val arbOrderParity: Arbitrary[Parity] = Arbitrary(ScalaGen.oneOf(Bid, Ask))
 
   implicit val arbLimit: Arbitrary[Limit] = Arbitrary(for {

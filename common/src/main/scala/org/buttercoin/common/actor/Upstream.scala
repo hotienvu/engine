@@ -1,6 +1,6 @@
 package org.buttercoin.common.actor
 
-import akka.actor.{ ActorRef, ActorLogging }
+import akka.actor.{ActorLogging, ActorRef}
 
 /** Sent to indicate the upstream actor for an {@link Upstream} instance */
 case class SetUpstream(upstream: ActorRef)

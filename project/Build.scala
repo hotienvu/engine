@@ -103,7 +103,7 @@ object Build extends sbt.Build {
       unitTest in Test <<= (test in Test in core)
     ).aggregate(core)
 
-  lazy val models = Project("models", file("models"))
+  lazy val models = Project("org.buttercoin.common.models", file("org.buttercoin.common.models"))
     .settings(buildSettings: _*)
     .settings(
       packagedArtifacts := Map.empty,

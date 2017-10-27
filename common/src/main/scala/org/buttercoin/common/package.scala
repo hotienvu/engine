@@ -1,9 +1,13 @@
-package org.buttercoin.common
+package org.buttercoin
+
+/**
+  * Created by vu_ho on 10/27/17.
+  */
 
 import org.buttercoin.common.messages.Result
-import scala.language.implicitConversions
 
-package object query {
+package object common {
+
   final case class SearchFilterParam(fieldName: String, value: String)
 
   sealed trait SearchSortType { val asParam: Long }
@@ -16,12 +20,12 @@ package object query {
   final case class SearchSortParam(fieldName: String, direction: SearchSortType)
 
   final case class SearchQueryParams(
-    skip: Option[Int] = None,
-    limit: Option[Int] = Some(10),
-    query: Option[String] = None,
-    sort: Option[SearchSortParam] = None,
-    filters: Option[List[SearchFilterParam]] = None
-  )
+                                      skip: Option[Int] = None,
+                                      limit: Option[Int] = Some(10),
+                                      query: Option[String] = None,
+                                      sort: Option[SearchSortParam] = None,
+                                      filters: Option[List[SearchFilterParam]] = None
+                                    )
   val EmptySearchQueryParams = SearchQueryParams()
 
   trait SearchQueryResult[T <: Result] extends Result {
@@ -33,8 +37,10 @@ package object query {
     val results = List()
   }
 
-  sealed trait OrderQueryType
-  case object OpenOrderQuery extends OrderQueryType
-  case object ClosedOrderQuery extends OrderQueryType
-  case object AllOrderQuery extends OrderQueryType
+  object query {
+    sealed trait OrderQueryType
+    case object OpenOrderQuery extends OrderQueryType
+    case object ClosedOrderQuery extends OrderQueryType
+    case object AllOrderQuery extends OrderQueryType
+  }
 }

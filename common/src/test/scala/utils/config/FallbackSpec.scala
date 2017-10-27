@@ -1,7 +1,7 @@
 package test.utils.config
 
 import org.scalatest.{ Matchers, FunSpec }
-import org.buttercoin.common.util.countryConfiguration._
+import org.buttercoin.common.util._
 
 import com.typesafe.config._
 import org.buttercoin.common.util.config.fallback._

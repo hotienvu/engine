@@ -1,24 +1,20 @@
 package test.datastore
 
-import org.scalatest.{ FunSpec, BeforeAndAfter, Matchers }
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import java.util.UUID
 
-import org.buttercoin.common.models.core.AccountID
-import org.buttercoin.common.util._
-import org.buttercoin.engine._
-import messages.LedgerDeposit
 import org.buttercoin.common.messages._
+import org.buttercoin.common.models.core.AccountID
 import org.buttercoin.common.models.currency._
-import org.buttercoin.common.models.money._
 import org.buttercoin.common.models.money.CurrencyImplicits._
 import org.buttercoin.common.models.order
 import org.buttercoin.common.testhelper.Gen._
-import shapeless.test.illTyped
-import java.util.UUID
-
-import shapeless.{ HNil, :: }
-import shapeless.syntax.singleton._
+import org.buttercoin.engine.datastore.book
+import org.buttercoin.engine.messages.LedgerDeposit
+import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import org.scalatest.{BeforeAndAfter, FunSpec, Matchers}
+import shapeless.HNil
 import shapeless.record._
+import shapeless.test.illTyped
 
 class BookSpec extends FunSpec
                with GeneratorDrivenPropertyChecks

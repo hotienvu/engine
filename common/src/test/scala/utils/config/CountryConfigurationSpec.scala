@@ -1,7 +1,7 @@
 package test.utils.config
 
 import org.scalatest.{ Matchers, FunSpec }
-import org.buttercoin.common.util.countryConfiguration._
+import org.buttercoin.common.util._
 
 class CountryConfigurationSpec extends FunSpec with Matchers {
 

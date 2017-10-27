@@ -1,7 +1,8 @@
 package org.buttercoin.common.actor
 
-import akka.actor.{ Actor, ActorLogging }
-import collection.mutable.Queue
+import akka.actor.{Actor, ActorLogging}
+
+import scala.collection.mutable.Queue
 
 /**
   * Enables simple composition of actor message handling states. Multiple

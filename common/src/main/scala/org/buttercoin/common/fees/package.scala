@@ -1,12 +1,14 @@
 package org.buttercoin.common
 
-import models.money._
-import messages.CreditTrade
-import com.typesafe.config._
+import com.typesafe.config.Config
+import org.buttercoin.common.messages.CreditTrade
+import org.buttercoin.common.models.money.Currency
 
-import scalaz._
-import Scalaz._
+import scalaz.{Tag, _}
 
+/**
+  * Created by vu_ho on 10/27/17.
+  */
 package object fees {
   trait FeeStrategyIDTag
   type FeeStrategyID = String @@ FeeStrategyIDTag

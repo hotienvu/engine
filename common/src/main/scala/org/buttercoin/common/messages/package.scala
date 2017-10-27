@@ -1,18 +1,16 @@
 package org.buttercoin.common
 
-import akka.actor.ActorRef
-import java.util.Date
 import java.util.UUID
+
+import akka.actor.ActorRef
 import org.buttercoin.common.models.core._
-import org.buttercoin.common.models.currency._
 import org.buttercoin.common.models.money._
 import org.buttercoin.common.models.order._
-import org.buttercoin.common.query._
-import org.buttercoin.common.util._
-import scala.language.implicitConversions
+import org.buttercoin.common.query.{AllOrderQuery, OrderQueryType}
 
+import scala.language.implicitConversions
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 package object messages {
   case class RegisterForBroadcast(actor: ActorRef)
@@ -96,26 +94,26 @@ package object messages {
     val limit: Option[Int]
   }
   final case class GetOpenOrders(
-    accountId: AccountID,
-    skip: Option[Int] = None,
-    limit: Option[Int] = Some(100)) extends AccountQuery with InternalQuery
+                                  accountId: AccountID,
+                                  skip: Option[Int] = None,
+                                  limit: Option[Int] = Some(100)) extends AccountQuery with InternalQuery
 
   final case class InternalOrderQuery(
-    accountId: Option[AccountID] = None,
-    skip: Option[Int] = None,
-    limit: Option[Int] = Some(100),
-    dateMin: Option[Long] = None,
-    dateMax: Option[Long] = None,
-    orderId: Option[OrderID] = None,
-    status: List[Status] = List.empty,
-    parity: Option[Parity] = None,
-    orderType: Option[Type] = None,
-    queryType: OrderQueryType = AllOrderQuery) extends InternalQuery
+                                       accountId: Option[AccountID] = None,
+                                       skip: Option[Int] = None,
+                                       limit: Option[Int] = Some(100),
+                                       dateMin: Option[Long] = None,
+                                       dateMax: Option[Long] = None,
+                                       orderId: Option[OrderID] = None,
+                                       status: List[Status] = List.empty,
+                                       parity: Option[Parity] = None,
+                                       orderType: Option[Type] = None,
+                                       queryType: OrderQueryType = AllOrderQuery) extends InternalQuery
 
   final case class GetOrderHistory(
-    accountId: AccountID,
-    skip: Option[Int] = None,
-    limit: Option[Int] = Some(100)) extends AccountQuery with InternalQuery
+                                    accountId: AccountID,
+                                    skip: Option[Int] = None,
+                                    limit: Option[Int] = Some(100)) extends AccountQuery with InternalQuery
 
   final case class CancelOrder(accountId: AccountID, orderId: OrderID) extends AccountOperation
 

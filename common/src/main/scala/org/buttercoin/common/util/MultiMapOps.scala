@@ -1,6 +1,6 @@
 package org.buttercoin.common.util
 
-import collection.immutable.{ Map, Set }
+import scala.collection.immutable.{Map, Set}
 
 object MultiMapOps {
   implicit class BindingOps[A, B](val map: Map[A, Set[B]]) extends AnyVal {

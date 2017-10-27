@@ -1,6 +1,7 @@
 package org.buttercoin.common.models
 
 import java.util.UUID
+
 import org.buttercoin.common.models.audit._
 import org.buttercoin.common.models.core._
 import org.buttercoin.common.models.currency._
@@ -9,8 +10,8 @@ import org.buttercoin.common.models.order._
 import org.buttercoin.common.messages._
 import org.buttercoin.common.util._
 import org.buttercoin.common.util.validations._
-import scala.Some
 
+import scala.Some
 import scalaz._
 import Scalaz._
 

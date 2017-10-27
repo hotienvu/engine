@@ -10,6 +10,7 @@ import org.buttercoin.common.models.money._
 import org.buttercoin.common.models.order
 import org.buttercoin.common.models.orderInfo._
 import org.buttercoin.common.util.validations._
+import org.buttercoin.engine.datastore.market
 import org.buttercoin.engine.messages._
 import org.buttercoin.engine.models.snapshot._
 
