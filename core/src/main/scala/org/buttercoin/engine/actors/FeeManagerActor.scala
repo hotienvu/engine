@@ -1,4 +1,4 @@
-package org.buttercoin.engine
+package org.buttercoin.engine.actors
 
 import akka.actor.{ Actor, ActorRef, ActorLogging }
 import org.buttercoin.common.messages._

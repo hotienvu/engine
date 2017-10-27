@@ -1,11 +1,12 @@
 package org.buttercoin.engine.fees.strategies
 
+import java.text.DateFormat
+import java.util.Date
+
+import com.typesafe.config._
 import org.buttercoin.common.fees._
 import org.buttercoin.common.messages._
 import org.buttercoin.common.models.money._
-import com.typesafe.config._
-import java.util.Date
-import java.text.DateFormat
 
 trait PromotionalFeeStrategy extends FeeStrategy {
   protected val promotional: FeeStrategy

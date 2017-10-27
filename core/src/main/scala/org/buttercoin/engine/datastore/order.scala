@@ -1,14 +1,14 @@
-package org.buttercoin.engine
+package org.buttercoin.engine.datastore
 
 import java.util.UUID
-import org.buttercoin.common.util._
+
 import org.buttercoin.common.models.core.AccountID
 import org.buttercoin.common.models.currency._
 import org.buttercoin.common.models.money._
-import org.buttercoin.common.models.money.CurrencyImplicits._
+import org.buttercoin.common.util._
 
-import scalaz.{ Order => zOrder, _ }
-import Scalaz._
+import scalaz.Scalaz._
+import scalaz.{Order => zOrder, _}
 
 package object orders {
   @SerialVersionUID(1L)

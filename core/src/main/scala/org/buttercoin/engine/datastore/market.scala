@@ -1,4 +1,4 @@
-package org.buttercoin.engine
+package org.buttercoin.engine.datastore
 
 import org.buttercoin.common.util._
 import org.buttercoin.common.models.core._

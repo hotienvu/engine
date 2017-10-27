@@ -1,13 +1,12 @@
 package org.buttercoin.engine.fees.strategies
 
-import org.buttercoin.common.fees._
-import org.buttercoin.common._
-import messages._
-import models.money._
-import models.currency._
-import models.order.LiquidityMaker
 import com.typesafe.config._
-import collection.JavaConverters._
+import org.buttercoin.common.fees._
+import org.buttercoin.common.messages._
+import org.buttercoin.common.models.currency._
+import org.buttercoin.common.models.money._
+
+import scala.collection.JavaConverters._
 
 class FlatFeeStrategy(val feeRate: BigDecimal) extends FeeStrategy {
   override def feeBreakdown[T <: Currency](msg: CreditTrade[T]): FeeInfo[T] = {

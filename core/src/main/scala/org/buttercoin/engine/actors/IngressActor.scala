@@ -3,24 +3,19 @@ package org.buttercoin.engine.actors
 import akka.actor._
 import akka.pattern.{ask, pipe}
 import akka.util.Timeout
-import concurrent.ExecutionContext.Implicits.global
-import org.buttercoin.common.messages._
 import org.buttercoin.common.actor._
+import org.buttercoin.common.messages._
+import org.buttercoin.common.models.core._
 import org.buttercoin.engine._
-import engine.{ STSNAP, LDSNAP }
-import scala.concurrent.Await
-import scala.concurrent.duration._
+import org.buttercoin.engine.models.snapshot._
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.stm._
-import org.buttercoin.engine.models.snapshot._
-import org.buttercoin.common.models.core._
-
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
-final case class LedgerTotalRequest(ledgers: Ref[List[LedgerSnapshot]] = Ref(Nil), accountsBlacklist: List[AccountID] = List()) {
-  import org.buttercoin.common.models.money.Currency
-  import org.buttercoin.common.models.currency._
+final case class LedgerTotalRequest(ledgers: Ref[List[LedgerSnapshot]] = Ref[List[LedgerSnapshot]](Nil), accountsBlacklist: List[AccountID] = List()) {
   import org.buttercoin.engine.models.Account
 
   val future = Future[TotalLedgerBalances] {

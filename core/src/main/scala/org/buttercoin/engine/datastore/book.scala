@@ -1,4 +1,4 @@
-package org.buttercoin.engine
+package org.buttercoin.engine.datastore
 
 import java.util.UUID
 import org.buttercoin.common.util._

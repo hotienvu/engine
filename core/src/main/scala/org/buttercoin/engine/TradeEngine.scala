@@ -1,43 +1,36 @@
 package org.buttercoin.engine
 
 import akka.actor._
-import com.lmax.disruptor.{ util => _, _ }
 import com.lmax.disruptor.dsl.Disruptor
+import com.lmax.disruptor.{util => _, _}
+import com.typesafe.scalalogging.slf4j.StrictLogging
 import org.buttercoin.common.messages._
-import org.buttercoin.common.util.validations._
 import org.buttercoin.common.models.currency._
 import org.buttercoin.common.models.money._
 import org.buttercoin.common.models.order
 import org.buttercoin.common.models.orderInfo._
-import org.buttercoin.engine.models.snapshot._
+import org.buttercoin.common.util.validations._
 import org.buttercoin.engine.messages._
+import org.buttercoin.engine.models.snapshot._
+
 import scala.concurrent.stm._
-
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
-import shapeless._
-import shapeless.syntax.singleton._
-import shapeless.record._
-
-import com.typesafe.scalalogging.slf4j.StrictLogging
-
-package object engine {
-  sealed trait Op
-  case object Nop extends Op
-  case class CO(order: CreateOrder) extends Op
-  case class XO(order: CancelOrder) extends Op
-  case class STSNAP(snap: EngineSnapshotRequest) extends Op
-  case class LDSNAP(snap: Seq[MarketSnapshot]) extends Op
-}
+sealed trait Op
+case object Nop extends Op
+case class CO(order: CreateOrder) extends Op
+case class XO(order: CancelOrder) extends Op
+case class STSNAP(snap: EngineSnapshotRequest) extends Op
+case class LDSNAP(snap: Seq[MarketSnapshot]) extends Op
 
 case class EngineEvent(
-  var op: engine.Op = engine.Nop,
+  var op: Op = Nop,
   var updates: ValidationNel[String, List[RoutedMessage]] = Nil.success,
   var seqNum: Long = 0
 ) {
   def sanitize() = {
-    op = engine.Nop
+    op = Nop
     updates = Nil.success
     seqNum = 0
   }
@@ -141,11 +134,11 @@ class TradeEngine(disruptor: Disruptor[EngineEvent], executor: ActorRef) extends
 
   def onEvent(event: EngineEvent, seqNum: Long, endOfBatch: Boolean) = {
     val (actions, results) = event.op match {
-      case engine.Nop => Nil -> Nil.success
-      case engine.CO(clo) => doCreateOrder(clo)
-      case engine.XO(co) => doCancelOrder(co)
-      case engine.STSNAP(x) => createSnapshot(x)
-      case engine.LDSNAP(x) => loadSnapshot(x)
+      case Nop => Nil -> Nil.success
+      case CO(clo) => doCreateOrder(clo)
+      case XO(co) => doCancelOrder(co)
+      case STSNAP(x) => createSnapshot(x)
+      case LDSNAP(x) => loadSnapshot(x)
     }
 
     val xs = event.updates |+| results

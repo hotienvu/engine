@@ -2,19 +2,18 @@ package org.buttercoin.engine.actors
 
 import akka.actor.Actor
 import org.buttercoin.common.fees._
+import org.buttercoin.common.messages._
+import org.buttercoin.common.models.core.AccountID
+import org.buttercoin.common.models.money._
+import org.buttercoin.common.models.orderInfo.CreateOrder
 import org.buttercoin.engine._
 import org.buttercoin.engine.messages._
-import org.buttercoin.common.messages._
-import org.buttercoin.common.models.money._
-import org.buttercoin.common.models.core.AccountID
-import org.buttercoin.common.models.orderInfo.CreateOrder
 import org.buttercoin.engine.models.Account
 import org.buttercoin.engine.models.snapshot._
 
 import scala.concurrent.stm._
-
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 
 class LedgerActor(val buffer: BufferAdapter,
@@ -69,7 +68,7 @@ class LedgerActor(val buffer: BufferAdapter,
     }
   }
 
-  def publish(op: engine.Op, updates: ValidationNel[String, List[RoutedMessage]], seqNum: Long) = {
+  def publish(op: Op, updates: ValidationNel[String, List[RoutedMessage]], seqNum: Long) = {
     val event = buffer.get(seqNum)
     event.op = op
     event.updates = updates |+| event.updates
@@ -87,23 +86,23 @@ class LedgerActor(val buffer: BufferAdapter,
     }
   }
 
-  def handleTracked: PartialFunction[AccountOperation, (engine.Op, ValidationNel[String, List[RoutedMessage]])] = {
-    case msg: LedgerDeposit => engine.Nop -> performDeposit(msg.accountId, msg.amount).map { xs =>
+  def handleTracked: PartialFunction[AccountOperation, (Op, ValidationNel[String, List[RoutedMessage]])] = {
+    case msg: LedgerDeposit => Nop -> performDeposit(msg.accountId, msg.amount).map { xs =>
         OperationSuccess(xs.head.message) :: xs
     }
-    case msg: LedgerWithdraw => engine.Nop -> performWithdraw(msg.accountId, msg.amount).map { xs =>
+    case msg: LedgerWithdraw => Nop -> performWithdraw(msg.accountId, msg.amount).map { xs =>
         OperationSuccess(xs.head.message) :: xs
     }
     case msg: CreateOrder =>
       val res = performWithdraw(msg.accountId, msg.info.offered)
-      if (res.isSuccess) { engine.CO(msg) -> res }
+      if (res.isSuccess) { CO(msg) -> res }
       else {
         notifyOrderFailed(msg.info.accountId, msg.info.orderId)
-        engine.Nop -> res
+        Nop -> res
       }
-    case msg: CancelOrder => engine.XO(msg) -> Nil.success
-    case msg: CreditTrade[_] => engine.Nop -> performTradeCredit(msg)
-    case msg: UseFeeStrategy => engine.Nop -> useFeeStrategy(msg)
+    case msg: CancelOrder => XO(msg) -> Nil.success
+    case msg: CreditTrade[_] => Nop -> performTradeCredit(msg)
+    case msg: UseFeeStrategy => Nop -> useFeeStrategy(msg)
   }
 
   def receive = {

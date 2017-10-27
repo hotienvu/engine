@@ -13,7 +13,7 @@ import org.buttercoin.common.models.core.AccountID
 import org.buttercoin.common.models.currency._
 import org.buttercoin.common.models.money.CurrencyImplicits._
 import org.buttercoin.engine.actors._
-import org.buttercoin.engine.{ engine, EngineEvent }
+import org.buttercoin.engine.{ Nop, EngineEvent }
 import java.util.UUID
 import concurrent.ExecutionContext.Implicits.global
 import org.buttercoin.common.testhelper.Gen._
@@ -53,7 +53,7 @@ class LedgerActorSpec extends FunSpec
         acct shouldNot be ( 'empty )
         acct.get._1.balanceFor(amt).map(_.current) should be ( Some(amt) )
 
-        evt.op should be ( engine.Nop )
+        evt.op should be ( Nop )
         evt.updates should be {
           Success(
             List(
@@ -83,7 +83,7 @@ class LedgerActorSpec extends FunSpec
         acct shouldNot be ( 'empty )
         acct.get._1.balanceFor(amt).map(_.current) should be ( Some(usd(0)) )
 
-        evt.op should be ( engine.Nop )
+        evt.op should be ( Nop )
         evt.updates should be {
           Success(
             List(
